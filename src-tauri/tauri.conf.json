@@ -61,7 +61,9 @@
       "rpm",
       "appimage",
       "app",
-      "dmg"
+      "dmg",
+      "nsis",
+      "msi"
     ],
     "icon": [
       "icons/32x32.png",
@@ -83,7 +85,10 @@
         "bundleMediaFramework": true
       },
       "deb": {
-        "depends": ["libwebkit2gtk-4.1-0", "libgtk-3-0"]
+        "depends": [
+          "libwebkit2gtk-4.1-0",
+          "libgtk-3-0"
+        ]
       }
     },
     "macOS": {
@@ -94,9 +99,42 @@
       "providerShortName": null,
       "entitlements": "entitlements.plist",
       "dmg": {
-        "windowSize": { "width": 540, "height": 380 },
-        "appPosition": { "x": 140, "y": 200 },
-        "applicationFolderPosition": { "x": 400, "y": 200 }
+        "windowSize": {
+          "width": 540,
+          "height": 380
+        },
+        "appPosition": {
+          "x": 140,
+          "y": 200
+        },
+        "applicationFolderPosition": {
+          "x": 400,
+          "y": 200
+        }
+      }
+    },
+    "windows": {
+      "digestAlgorithm": "sha256",
+      "certificateThumbprint": null,
+      "timestampUrl": "",
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper"
+      },
+      "allowDowngrades": true,
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "installMode": "currentUser",
+        "languages": [
+          "Russian"
+        ],
+        "displayLanguageSelector": false,
+        "compression": "lzma",
+        "startMenuFolder": "opcode"
+      },
+      "wix": {
+        "language": [
+          "ru-RU"
+        ]
       }
     }
   }
