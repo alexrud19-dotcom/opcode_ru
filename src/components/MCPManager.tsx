@@ -75,7 +75,7 @@ export const MCPManager: React.FC<MCPManagerProps> = ({
    */
   const handleServerRemoved = (name: string) => {
     setServers(prev => prev.filter(s => s.name !== name));
-    setToast({ message: `Server "${name}" removed successfully!`, type: "success" });
+    setToast({ message: t('mcp.serverRemoved', { name }), type: "success" });
   };
 
   /**
@@ -85,12 +85,12 @@ export const MCPManager: React.FC<MCPManagerProps> = ({
     loadServers();
     if (failed === 0) {
       setToast({ 
-        message: `Successfully imported ${imported} server${imported > 1 ? 's' : ''}!`, 
+        message: t('mcp.importedCount', { count: imported }), 
         type: "success" 
       });
     } else {
       setToast({ 
-        message: `Imported ${imported} server${imported > 1 ? 's' : ''}, ${failed} failed`, 
+        message: t('mcp.importedWithErrors', { imported, failed }), 
         type: "error" 
       });
     }

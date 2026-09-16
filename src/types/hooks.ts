@@ -83,16 +83,16 @@ export interface HookTemplate {
 export const HOOK_TEMPLATES: HookTemplate[] = [
   {
     id: 'log-bash-commands',
-    name: 'Log Shell Commands',
-    description: 'Log all bash commands to a file for auditing',
+    name: 'hookTpl.logBash',
+    description: 'hookTpl.logBashDesc',
     event: 'PreToolUse',
     matcher: 'Bash',
     commands: ['jq -r \'"\(.tool_input.command) - \(.tool_input.description // "No description")"\' >> ~/.claude/bash-command-log.txt']
   },
   {
     id: 'format-on-save',
-    name: 'Auto-format Code',
-    description: 'Run code formatters after file modifications',
+    name: 'hookTpl.format',
+    description: 'hookTpl.formatDesc',
     event: 'PostToolUse',
     matcher: 'Write|Edit|MultiEdit',
     commands: [
@@ -102,23 +102,23 @@ export const HOOK_TEMPLATES: HookTemplate[] = [
   },
   {
     id: 'git-commit-guard',
-    name: 'Protect Main Branch',
-    description: 'Prevent direct commits to main/master branch',
+    name: 'hookTpl.gitGuard',
+    description: 'hookTpl.gitGuardDesc',
     event: 'PreToolUse',
     matcher: 'Bash',
     commands: ['if [[ "$(jq -r .tool_input.command)" =~ "git commit" ]] && [[ "$(git branch --show-current 2>/dev/null)" =~ ^(main|master)$ ]]; then echo "Direct commits to main/master branch are not allowed"; exit 2; fi']
   },
   {
     id: 'custom-notification',
-    name: 'Custom Notifications',
-    description: 'Send custom notifications when Claude needs attention',
+    name: 'hookTpl.notify',
+    description: 'hookTpl.notifyDesc',
     event: 'Notification',
     commands: ['osascript -e "display notification \\"$(jq -r .message)\\" with title \\"$(jq -r .title)\\" sound name \\"Glass\\""']
   },
   {
     id: 'continue-on-tests',
-    name: 'Auto-continue on Test Success',
-    description: 'Automatically continue when tests pass',
+    name: 'hookTpl.continueTests',
+    description: 'hookTpl.continueTestsDesc',
     event: 'Stop',
     commands: ['if grep -q "All tests passed" "$( jq -r .transcript_path )"; then echo \'{"decision": "block", "reason": "All tests passed. Continue with next task."}\'; fi']
   }

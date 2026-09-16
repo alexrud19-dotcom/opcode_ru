@@ -165,7 +165,7 @@ function AppContent() {
       setProjects(projectList);
     } catch (err) {
       console.error("Failed to load projects:", err);
-      setError("Failed to load projects. Please ensure ~/.claude directory exists.");
+      setError(t('tabContent.loadProjectsFailed'));
     } finally {
       setLoading(false);
     }
@@ -249,7 +249,7 @@ function AppContent() {
               >
                 <h1 className="text-4xl font-bold tracking-tight">
                   <span className="rotating-symbol"></span>
-                  Welcome to opcode
+                  {t('app.welcome')}
                 </h1>
               </motion.div>
 

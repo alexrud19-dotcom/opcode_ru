@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useCallback, useEffect, useRef } from 'react';
 import { TabPersistenceService } from '@/services/tabPersistence';
 import { SessionPersistenceService } from '@/services/sessionPersistence';
+import i18n from '@/lib/i18n';
 
 export interface Tab {
   id: string;
@@ -145,7 +146,7 @@ export const TabProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const addTab = useCallback((tabData: Omit<Tab, 'id' | 'order' | 'createdAt' | 'updatedAt'>): string => {
     if (tabs.length >= MAX_TABS) {
-      throw new Error(`Maximum number of tabs (${MAX_TABS}) reached`);
+      throw new Error(i18n.t('misc.maxTabs', { count: MAX_TABS }));
     }
 
     const newTab: Tab = {

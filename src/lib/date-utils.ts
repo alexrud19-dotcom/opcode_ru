@@ -1,3 +1,5 @@
+import i18n from '@/lib/i18n';
+
 /**
  * Formats a Unix timestamp to a human-readable date string
  * @param timestamp - Unix timestamp in seconds
@@ -17,7 +19,7 @@ export function formatUnixTimestamp(timestamp: number): string {
   
   // If it's yesterday
   if (isYesterday(date)) {
-    return `Yesterday, ${formatTime(date)}`;
+    return i18n.t('time.yesterdayAt', { time: formatTime(date) });
   }
   
   // If it's within the last week, show day of week
@@ -27,14 +29,14 @@ export function formatUnixTimestamp(timestamp: number): string {
   
   // If it's this year, don't show year
   if (date.getFullYear() === now.getFullYear()) {
-    return date.toLocaleDateString('en-US', { 
+    return date.toLocaleDateString(i18n.language, { 
       month: 'short', 
       day: 'numeric' 
     });
   }
   
   // Otherwise show full date
-  return date.toLocaleDateString('en-US', { 
+  return date.toLocaleDateString(i18n.language, { 
     month: 'short', 
     day: 'numeric',
     year: 'numeric'
@@ -77,7 +79,7 @@ export function getFirstLine(text: string): string {
 
 // Helper functions
 function formatTime(date: Date): string {
-  return date.toLocaleTimeString('en-US', { 
+  return date.toLocaleTimeString(i18n.language, { 
     hour: 'numeric', 
     minute: '2-digit',
     hour12: true 
@@ -102,7 +104,7 @@ function isWithinWeek(date: Date): boolean {
 }
 
 function getDayName(date: Date): string {
-  return date.toLocaleDateString('en-US', { weekday: 'long' });
+  return date.toLocaleDateString(i18n.language, { weekday: 'long' });
 }
 
 /**
@@ -127,26 +129,26 @@ export function formatTimeAgo(timestamp: number): string {
   const years = Math.floor(days / 365);
   
   if (years > 0) {
-    return years === 1 ? '1 year ago' : `${years} years ago`;
+    return i18n.t('time.yearsAgo', { count: years });
   }
   if (months > 0) {
-    return months === 1 ? '1 month ago' : `${months} months ago`;
+    return i18n.t('time.monthsAgo', { count: months });
   }
   if (weeks > 0) {
-    return weeks === 1 ? '1 week ago' : `${weeks} weeks ago`;
+    return i18n.t('time.weeksAgo', { count: weeks });
   }
   if (days > 0) {
-    return days === 1 ? '1 day ago' : `${days} days ago`;
+    return i18n.t('time.daysAgo', { count: days });
   }
   if (hours > 0) {
-    return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
+    return i18n.t('time.hoursAgo', { count: hours });
   }
   if (minutes > 0) {
-    return minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
+    return i18n.t('time.minutesAgo', { count: minutes });
   }
   if (seconds > 0) {
-    return seconds === 1 ? '1 second ago' : `${seconds} seconds ago`;
+    return i18n.t('time.secondsAgo', { count: seconds });
   }
   
-  return 'just now';
+  return i18n.t('time.justNow');
 } 

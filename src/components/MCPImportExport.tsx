@@ -45,7 +45,7 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
         const failedServers = result.servers.filter(s => !s.success);
         
         if (successfulServers.length > 0) {
-          const successMessage = `Successfully imported: ${successfulServers.map(s => s.name).join(", ")}`;
+          const successMessage = t('mcp.importedList', { list: successfulServers.map(s => s.name).join(", ") });
           onImportCompleted(result.imported_count, result.failed_count);
           // Show success details
           if (failedServers.length === 0) {
@@ -57,7 +57,7 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
           const failureDetails = failedServers
             .map(s => `${s.name}: ${s.error || "Unknown error"}`)
             .join("\n");
-          onError(`Failed to import some servers:\n${failureDetails}`);
+          onError(t('mcp.importPartFailed', { list: failureDetails }));
         }
       } else {
         onImportCompleted(result.imported_count, result.failed_count);

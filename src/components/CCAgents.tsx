@@ -211,7 +211,7 @@ export const CCAgents: React.FC<CCAgentsProps> = ({ onBack, className }) => {
         filePath 
       });
       
-      setToast({ message: `Agent "${agent.name}" exported successfully`, type: "success" });
+      setToast({ message: t('agents.exportedOk', { name: agent.name }), type: "success" });
     } catch (err) {
       console.error("Failed to export agent:", err);
       setToast({ message: t('agents.exportFailed'), type: "error" });
@@ -545,8 +545,7 @@ export const CCAgents: React.FC<CCAgentsProps> = ({ onBack, className }) => {
               {t('agents.deleteHeading')}
             </DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the agent "{agentToDelete?.name}"? 
-              This action cannot be undone and will permanently remove the agent and all its associated data.
+              {t('agents.deleteConfirmCC', { name: agentToDelete?.name })}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">

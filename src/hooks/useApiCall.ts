@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import i18n from '@/lib/i18n';
 
 interface ApiCallOptions {
   onSuccess?: (data: any) => void;
@@ -36,7 +37,7 @@ export function useApiCall<T>(
     onError,
     showErrorToast = true,
     showSuccessToast = false,
-    successMessage = 'Operation completed successfully',
+    successMessage = i18n.t('misc.operationOk'),
     errorMessage
   } = options;
 
@@ -77,7 +78,7 @@ export function useApiCall<T>(
         // Only update state if component is still mounted
         if (!isMountedRef.current) return null;
 
-        const error = err instanceof Error ? err : new Error('An error occurred');
+        const error = err instanceof Error ? err : new Error(i18n.t('misc.errorOccurred'));
         setError(error);
 
         if (showErrorToast) {

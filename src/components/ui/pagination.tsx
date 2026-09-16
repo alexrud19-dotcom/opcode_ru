@@ -2,6 +2,7 @@ import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTranslation } from 'react-i18next';
 
 interface PaginationProps {
   /**
@@ -38,6 +39,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   className,
 }) => {
+  const { t } = useTranslation();
   if (totalPages <= 1) {
     return null;
   }
@@ -55,7 +57,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       </Button>
       
       <span className="text-sm text-muted-foreground">
-        Page {currentPage} of {totalPages}
+        {t('misc.page')} {currentPage} of {totalPages}
       </span>
       
       <Button

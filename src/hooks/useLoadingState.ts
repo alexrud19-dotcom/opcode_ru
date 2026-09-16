@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import i18n from '@/lib/i18n';
 
 interface LoadingState<T> {
   data: T | null;
@@ -28,7 +29,7 @@ export function useLoadingState<T>(
         setData(result);
         return result;
       } catch (err) {
-        const error = err instanceof Error ? err : new Error('An error occurred');
+        const error = err instanceof Error ? err : new Error(i18n.t('misc.errorOccurred'));
         setError(error);
         throw error;
       } finally {

@@ -9,6 +9,7 @@ import { formatISOTimestamp } from "@/lib/date-utils";
 import type { AgentRunWithMetrics } from "@/lib/api";
 import { AGENT_ICONS } from "./CCAgents";
 import { useTabState } from "@/hooks/useTabState";
+import { useTranslation } from 'react-i18next';
 
 interface AgentRunsListProps {
   /**
@@ -41,6 +42,7 @@ export const AgentRunsList: React.FC<AgentRunsListProps> = ({
   onRunClick,
   className,
 }) => {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const { createAgentTab } = useTabState();
   
@@ -91,7 +93,7 @@ export const AgentRunsList: React.FC<AgentRunsListProps> = ({
     return (
       <div className={cn("text-center py-8 text-muted-foreground", className)}>
         <Play className="h-8 w-8 mx-auto mb-2 opacity-50" />
-        <p className="text-sm">No execution history yet</p>
+        <p className="text-sm">{t('misc.noRunHistory')}</p>
       </div>
     );
   }
@@ -133,7 +135,7 @@ export const AgentRunsList: React.FC<AgentRunsListProps> = ({
                         {run.status === "running" && (
                           <div className="flex items-center gap-1">
                             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span className="text-xs text-green-600 font-medium">Running</span>
+                            <span className="text-xs text-green-600 font-medium">{t('misc.running')}</span>
                           </div>
                         )}
                       </div>
@@ -172,7 +174,7 @@ export const AgentRunsList: React.FC<AgentRunsListProps> = ({
                         className="text-xs"
                       >
                         {run.status === "completed" ? "Completed" :
-                         run.status === "running" ? "Running" :
+                         run.status === "running" ? t('misc.running') :
                          run.status === "failed" ? "Failed" :
                          "Pending"}
                       </Badge>

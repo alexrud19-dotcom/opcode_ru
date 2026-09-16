@@ -85,7 +85,7 @@ export const Agents: React.FC = () => {
       const projectPath = await open({
         directory: true,
         multiple: false,
-        title: `Select project directory for ${agent.name}`
+        title: t('agents.selectDir', { name: agent.name })
       });
       
       if (!projectPath) {
@@ -99,10 +99,10 @@ export const Agents: React.FC = () => {
         detail: { agent, tabId, projectPath } 
       }));
       
-      setToast({ message: `Opening agent: ${agent.name}`, type: 'success' });
+      setToast({ message: t('agents.opening', { name: agent.name }), type: 'success' });
     } catch (error) {
       console.error('Failed to open agent:', error);
-      setToast({ message: `Failed to open agent: ${agent.name}`, type: 'error' });
+      setToast({ message: t('agents.openFailed', { error: agent.name }), type: 'error' });
     }
   };
 
@@ -111,13 +111,13 @@ export const Agents: React.FC = () => {
     
     try {
       await api.deleteAgent(agentToDelete.id);
-      setToast({ message: `Deleted agent: ${agentToDelete.name}`, type: 'success' });
+      setToast({ message: t('agents.deletedNamed', { name: agentToDelete.name }), type: 'success' });
       setAgents(prev => prev.filter(a => a.id !== agentToDelete.id));
       setShowDeleteDialog(false);
       setAgentToDelete(null);
     } catch (error) {
       console.error('Failed to delete agent:', error);
-      setToast({ message: `Failed to delete agent: ${agentToDelete.name}`, type: 'error' });
+      setToast({ message: t('agents.deleteFailedNamed', { error: agentToDelete.name }), type: 'error' });
     }
   };
 
@@ -133,7 +133,7 @@ export const Agents: React.FC = () => {
 
       if (selected) {
         const importedAgent = await api.importAgentFromFile(selected as string);
-        setToast({ message: `Imported agent: ${importedAgent.name}`, type: 'success' });
+        setToast({ message: t('agents.importedNamed', { name: importedAgent.name }), type: 'success' });
         loadAgents();
       }
     } catch (error) {
@@ -153,7 +153,7 @@ export const Agents: React.FC = () => {
 
       if (path && agent.id) {
         await invoke('export_agent_to_file', { id: agent.id, filePath: path });
-        setToast({ message: `Exported agent: ${agent.name}`, type: 'success' });
+        setToast({ message: t('agents.exportedNamed', { name: agent.name }), type: 'success' });
       }
     } catch (error) {
       console.error('Failed to export agent:', error);
@@ -290,7 +290,7 @@ export const Agents: React.FC = () => {
             >
               <h3 className="text-lg font-semibold mb-4">{t('agents.deleteHeading')}</h3>
               <p className="text-muted-foreground mb-6">
-                Are you sure you want to delete "{agentToDelete.name}"? This action cannot be undone.
+                {t('agents.deleteConfirm', { name: agentToDelete.name })}
               </p>
               <div className="flex gap-3 justify-end">
                 <Button
@@ -317,11 +317,11 @@ export const Agents: React.FC = () => {
             <TabsList className="grid grid-cols-2 w-full max-w-md mb-6 h-auto p-1">
               <TabsTrigger value="agents" className="py-2.5 px-3">
                 <Bot className="w-4 h-4 mr-2" />
-                Agents ({agents.length})
+                {t('agents.tabAgents', { count: agents.length })}
               </TabsTrigger>
               <TabsTrigger value="running" className="py-2.5 px-3">
                 <History className="w-4 h-4 mr-2" />
-                History ({runningAgents.length})
+                {t('agents.tabHistory', { count: runningAgents.length })}
               </TabsTrigger>
             </TabsList>
 

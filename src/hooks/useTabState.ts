@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import i18n from '@/lib/i18n';
 import { useTabContext } from '@/contexts/TabContext';
 import { Tab } from '@/contexts/TabContext';
 
@@ -147,7 +148,7 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'mcp',
-      title: 'MCP Servers',
+      title: i18n.t('misc.mcpServers'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'server'
@@ -228,7 +229,7 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'create-agent',
-      title: 'Create Agent',
+      title: i18n.t('misc.createAgent'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'plus'
@@ -245,7 +246,7 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'import-agent',
-      title: 'Import Agent',
+      title: i18n.t('misc.importAgent'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'import'
@@ -259,7 +260,7 @@ export const useTabState = (): UseTabStateReturn => {
     // Check for unsaved changes
     if (!force && tab.hasUnsavedChanges) {
       // In a real implementation, you'd show a confirmation dialog here
-      const confirmed = window.confirm(`Tab "${tab.title}" has unsaved changes. Close anyway?`);
+      const confirmed = window.confirm(i18n.t('misc.unsavedTab', { title: tab.title }));
       if (!confirmed) return false;
     }
 

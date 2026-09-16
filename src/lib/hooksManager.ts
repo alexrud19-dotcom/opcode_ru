@@ -2,6 +2,7 @@
  * Hooks configuration manager for Claude Code hooks
  */
 
+import i18n from '@/lib/i18n';
 import {
   HooksConfiguration,
   HookMatcher,
@@ -147,7 +148,7 @@ export class HooksManager {
               errors.push({
                 event,
                 matcher: matcher.matcher,
-                message: 'Empty command'
+                message: i18n.t('hookWarn.emptyCommand')
               });
             }
 
@@ -173,7 +174,7 @@ export class HooksManager {
         if (!hook.command || !hook.command.trim()) {
           errors.push({
             event,
-            message: 'Empty command'
+            message: i18n.t('hookWarn.emptyCommand')
           });
         }
 
@@ -202,16 +203,16 @@ export class HooksManager {
     }
     
     const patterns = [
-      { pattern: /rm\s+-rf\s+\/(?:\s|$)/, message: 'Destructive command on root directory' },
-      { pattern: /rm\s+-rf\s+~/, message: 'Destructive command on home directory' },
-      { pattern: /:\s*\(\s*\)\s*\{.*\}\s*;/, message: 'Fork bomb pattern detected' },
-      { pattern: /curl.*\|\s*(?:bash|sh)/, message: 'Downloading and executing remote code' },
-      { pattern: /wget.*\|\s*(?:bash|sh)/, message: 'Downloading and executing remote code' },
-      { pattern: />\/dev\/sda/, message: 'Direct disk write operation' },
-      { pattern: /sudo\s+/, message: 'Elevated privileges required' },
-      { pattern: /dd\s+.*of=\/dev\//, message: 'Dangerous disk operation' },
-      { pattern: /mkfs\./, message: 'Filesystem formatting command' },
-      { pattern: /:(){ :|:& };:/, message: 'Fork bomb detected' },
+      { pattern: /rm\s+-rf\s+\/(?:\s|$)/, message: i18n.t('hookWarn.rootDestructive') },
+      { pattern: /rm\s+-rf\s+~/, message: i18n.t('hookWarn.homeDestructive') },
+      { pattern: /:\s*\(\s*\)\s*\{.*\}\s*;/, message: i18n.t('hookWarn.forkBombPattern') },
+      { pattern: /curl.*\|\s*(?:bash|sh)/, message: i18n.t('hookWarn.remoteCode') },
+      { pattern: /wget.*\|\s*(?:bash|sh)/, message: i18n.t('hookWarn.remoteCode') },
+      { pattern: />\/dev\/sda/, message: i18n.t('hookWarn.diskWrite') },
+      { pattern: /sudo\s+/, message: i18n.t('hookWarn.elevated') },
+      { pattern: /dd\s+.*of=\/dev\//, message: i18n.t('hookWarn.dangerousDisk') },
+      { pattern: /mkfs\./, message: i18n.t('hookWarn.formatFs') },
+      { pattern: /:(){ :|:& };:/, message: i18n.t('hookWarn.forkBomb') },
     ];
 
     for (const { pattern, message } of patterns) {
@@ -222,7 +223,7 @@ export class HooksManager {
 
     // Check for unescaped variables that could lead to code injection
     if (command.includes('$') && !command.includes('"$')) {
-      warnings.push('Unquoted shell variable detected - potential code injection risk');
+      warnings.push(i18n.t('hookWarn.unquotedVar'));
     }
 
     return warnings;
