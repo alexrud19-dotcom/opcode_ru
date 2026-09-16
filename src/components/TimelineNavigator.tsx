@@ -328,11 +328,11 @@ export const TimelineNavigator: React.FC<TimelineNavigatorProps> = ({
                   <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Hash className="h-3 w-3" />
-                      {node.checkpoint.metadata.totalTokens.toLocaleString()} tokens
+                      {node.checkpoint.metadata.totalTokens.toLocaleString()} {t('units.tokens')}
                     </span>
                     <span className="flex items-center gap-1">
                       <FileCode className="h-3 w-3" />
-                      {node.checkpoint.metadata.fileChanges} files
+                      {t('units.files', { count: node.checkpoint.metadata.fileChanges })}
                     </span>
                   </div>
                 </div>
@@ -443,7 +443,7 @@ export const TimelineNavigator: React.FC<TimelineNavigatorProps> = ({
           <h3 className="text-sm font-medium">{t('timeline.title')}</h3>
           {timeline && (
             <Badge variant="outline" className="text-xs">
-              {timeline.totalCheckpoints} checkpoints
+              {t('units.checkpoints', { count: timeline.totalCheckpoints })}
             </Badge>
           )}
         </div>
@@ -565,7 +565,7 @@ export const TimelineNavigator: React.FC<TimelineNavigatorProps> = ({
               {/* Token delta */}
               <div className="flex items-center justify-center">
                 <Badge variant={diff.tokenDelta > 0 ? "default" : "secondary"}>
-                  {diff.tokenDelta > 0 ? "+" : ""}{diff.tokenDelta.toLocaleString()} tokens
+                  {diff.tokenDelta > 0 ? "+" : ""}{diff.tokenDelta.toLocaleString()} {t('units.tokens')}
                 </Badge>
               </div>
               

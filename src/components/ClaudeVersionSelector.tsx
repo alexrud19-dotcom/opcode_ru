@@ -191,8 +191,10 @@ export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
     );
   }
 
-  const systemInstallations = installations.filter(i => i.installation_type === t('version.systemShort'));
-  const customInstallations = installations.filter(i => i.installation_type === t('version.customShort'));
+  // installation_type приходит с бэкенда как "System"/"Custom" — сравниваем с оригиналом,
+  // переводится только то, что показывается пользователю.
+  const systemInstallations = installations.filter(i => i.installation_type === 'System');
+  const customInstallations = installations.filter(i => i.installation_type === 'Custom');
 
   // Simplified mode - more streamlined UI
   if (simplified) {

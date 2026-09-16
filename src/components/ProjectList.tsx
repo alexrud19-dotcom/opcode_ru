@@ -38,7 +38,8 @@ interface ProjectListProps {
  * Extracts the project name from the full path
  */
 const getProjectName = (path: string): string => {
-  const parts = path.split('/').filter(Boolean);
+  // Разделитель может быть и '/', и '\\' — на Windows иначе возвращался весь путь.
+  const parts = path.split(/[/\\]/).filter(Boolean);
   return parts[parts.length - 1] || path;
 };
 
@@ -47,21 +48,14 @@ const getProjectName = (path: string): string => {
  * Truncates long paths with ellipsis in the middle
  */
 const getDisplayPath = (path: string, maxLength: number = 30): string => {
-  // Try to make path home-relative
+  // Приводим путь к виду относительно домашней папки.
+  // Windows-пути с обратными слешами тоже учитываем — иначе путь показывался целиком.
   let displayPath = path;
-  const homeIndicators = ['/Users/', '/home/'];
-  for (const indicator of homeIndicators) {
-    if (path.includes(indicator)) {
-      const parts = path.split('/');
-      const userIndex = parts.findIndex((_part, i) => 
-        i > 0 && parts[i - 1] === indicator.split('/')[1]
-      );
-      if (userIndex > 0) {
-        const relativePath = parts.slice(userIndex + 1).join('/');
-        displayPath = `~/${relativePath}`;
-        break;
-      }
-    }
+  const parts = path.split(/[/\\]/).filter(Boolean);
+  const homeRoots = ['users', 'home'];
+  const rootIndex = parts.findIndex((p) => homeRoots.includes(p.toLowerCase()));
+  if (rootIndex >= 0 && parts.length > rootIndex + 2) {
+    displayPath = '~/' + parts.slice(rootIndex + 2).join('/');
   }
   
   // Truncate if too long

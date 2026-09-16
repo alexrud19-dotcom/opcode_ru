@@ -475,7 +475,7 @@ export const CCAgents: React.FC<CCAgentsProps> = ({ onBack, className }) => {
                           {t('common.previous')}
                         </Button>
                         <span className="flex items-center px-3 text-body-small">
-                          {t('common.page')} {currentPage} of {totalPages}
+                          {t('common.page')} {currentPage} {t('common.of')} {totalPages}
                         </span>
                         <Button
                           size="sm"

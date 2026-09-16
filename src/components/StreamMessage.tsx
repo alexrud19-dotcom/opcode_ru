@@ -304,7 +304,7 @@ const StreamMessageComponent: React.FC<StreamMessageProps> = ({ message, classNa
                 
                 {msg.usage && (
                   <div className="text-xs text-muted-foreground mt-2">
-                    {t('stream.tokens')} {msg.usage.input_tokens} {t('stream.in')} {msg.usage.output_tokens} out
+                    {t('stream.tokens')} {msg.usage.input_tokens} {t('stream.in')} {msg.usage.output_tokens} {t('stream.outShort')}
                   </div>
                 )}
               </div>

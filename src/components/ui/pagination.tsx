@@ -57,7 +57,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       </Button>
       
       <span className="text-sm text-muted-foreground">
-        {t('misc.page')} {currentPage} of {totalPages}
+        {t('misc.page')} {currentPage} {t('common.of')} {totalPages}
       </span>
       
       <Button

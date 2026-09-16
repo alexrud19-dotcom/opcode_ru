@@ -380,7 +380,7 @@ export const StorageTab: React.FC = () => {
                     <div className="flex items-center justify-between w-full">
                       <span>{table.name}</span>
                       <span className="text-[10px] text-muted-foreground ml-2">
-                        {table.row_count} rows
+                        {t('units.rows', { count: table.row_count })}
                       </span>
                     </div>
                   </SelectItem>
@@ -520,9 +520,9 @@ export const StorageTab: React.FC = () => {
           {tableData.total_pages > 1 && (
             <div className="flex items-center justify-between p-3 border-t">
               <div className="text-xs text-muted-foreground">
-                {t('storage.showing')} {(currentPage - 1) * pageSize + 1} to{" "}
-                {Math.min(currentPage * pageSize, tableData.total_rows)} of{" "}
-                {tableData.total_rows} rows
+                {t('storage.showing')} {(currentPage - 1) * pageSize + 1} {t('common.toRange')}{" "}
+                {Math.min(currentPage * pageSize, tableData.total_rows)} {t('common.of')}{" "}
+                {tableData.total_rows} {t('units.rowsShort')}
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -536,7 +536,7 @@ export const StorageTab: React.FC = () => {
                   {t('common.previous')}
                 </Button>
                 <div className="text-xs">
-                  {t('common.page')} {currentPage} of {tableData.total_pages}
+                  {t('common.page')} {currentPage} {t('common.of')} {tableData.total_pages}
                 </div>
                 <Button
                   variant="outline"

@@ -423,7 +423,7 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
                             <div className="flex items-center gap-4 text-xs">
                               {command.allowed_tools.length > 0 && (
                                 <span className="text-muted-foreground">
-                                  {command.allowed_tools.length} tool{command.allowed_tools.length === 1 ? '' : 's'}
+                                  {t('units.tools', { count: command.allowed_tools.length })}
                                 </span>
                               )}
                               

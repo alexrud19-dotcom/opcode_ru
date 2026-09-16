@@ -398,7 +398,7 @@ export const SlashCommandPicker: React.FC<SlashCommandPickerProps> = ({
                     </span>
                     {!searchQuery && (
                       <p className="text-xs text-muted-foreground mt-2 text-center px-4">
-                        {t('cmdPicker.createIn')} <code className="px-1">.claude/commands/</code> or <code className="px-1">~/.claude/commands/</code>
+                        {t('cmdPicker.createIn')} <code className="px-1">.claude/commands/</code> {t('common.or')} <code className="px-1">~/.claude/commands/</code>
                       </p>
                     )}
                   </div>
@@ -449,7 +449,7 @@ export const SlashCommandPicker: React.FC<SlashCommandPickerProps> = ({
                                 <div className="flex items-center gap-3 mt-1">
                                   {command.allowed_tools.length > 0 && (
                                     <span className="text-xs text-muted-foreground">
-                                      {command.allowed_tools.length} tool{command.allowed_tools.length === 1 ? '' : 's'}
+                                      {t('units.tools', { count: command.allowed_tools.length })}
                                     </span>
                                   )}
                                   
@@ -523,7 +523,7 @@ export const SlashCommandPicker: React.FC<SlashCommandPickerProps> = ({
                                       <div className="flex items-center gap-3 mt-1">
                                         {command.allowed_tools.length > 0 && (
                                           <span className="text-xs text-muted-foreground">
-                                            {command.allowed_tools.length} tool{command.allowed_tools.length === 1 ? '' : 's'}
+                                            {t('units.tools', { count: command.allowed_tools.length })}
                                           </span>
                                         )}
                                         

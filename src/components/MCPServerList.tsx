@@ -388,7 +388,7 @@ export const MCPServerList: React.FC<MCPServerListProps> = ({
         <div>
           <h3 className="text-base font-semibold">{t('mcp.configured')}</h3>
           <p className="text-sm text-muted-foreground">
-            {servers.length} server{servers.length !== 1 ? "s" : ""} configured
+            {t('units.serversConfigured', { count: servers.length })}
           </p>
         </div>
         <Button

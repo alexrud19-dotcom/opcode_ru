@@ -80,7 +80,7 @@ export const ExecutionControlBar: React.FC<ExecutionControlBarProps> = ({
             {/* Tokens */}
             <div className="flex items-center gap-1.5">
               <Hash className="h-3.5 w-3.5" />
-              <span>{formatTokens(totalTokens)} tokens</span>
+              <span>{formatTokens(totalTokens)} {t('units.tokens')}</span>
             </div>
           </div>
 

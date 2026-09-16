@@ -28,6 +28,14 @@ const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes cache - increased for bette
 /**
  * Optimized UsageDashboard component with caching and progressive loading
  */
+/** Последние два сегмента пути; разделитель может быть и '/', и '\\'. */
+const shortPath = (path: string): string =>
+  path.split(/[/\\]/).filter(Boolean).slice(-2).join('/');
+
+/** Имя проекта, а не весь путь: длинный путь остаётся во всплывающей подсказке. */
+const projectLabel = (project: { project_name?: string; project_path: string }): string =>
+  project.project_name || project.project_path.split(/[/\\]/).filter(Boolean).pop() || project.project_path;
+
 export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
@@ -262,7 +270,7 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
             {getModelDisplayName(model.model)}
           </Badge>
           <span className="text-caption text-muted-foreground">
-            {model.session_count} sessions
+            {t('usage.sessionsCount', { count: model.session_count })}
           </span>
         </div>
         <span className="text-body-small font-medium">
@@ -280,10 +288,10 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
       <div key={project.project_path} className="flex items-center justify-between">
         <div className="flex flex-col">
           <span className="text-body-small font-medium truncate max-w-[200px]" title={project.project_path}>
-            {project.project_path}
+            {projectLabel(project)}
           </span>
           <span className="text-caption text-muted-foreground">
-            {project.session_count} sessions
+            {t('usage.sessionsCount', { count: project.session_count })}
           </span>
         </div>
         <span className="text-body-small font-medium">
@@ -436,7 +444,7 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                                   {getModelDisplayName(model.model)}
                                 </Badge>
                                 <span className="text-sm text-muted-foreground">
-                                  {model.session_count} sessions
+                                  {t('usage.sessionsCount', { count: model.session_count })}
                                 </span>
                               </div>
                               <span className="text-sm font-semibold">
@@ -493,14 +501,14 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                                 <div key={project.project_path} className="flex items-center justify-between py-2 border-b border-border last:border-0">
                                   <div className="flex flex-col truncate">
                                     <span className="text-sm font-medium truncate" title={project.project_path}>
-                                      {project.project_path}
+                                      {projectLabel(project)}
                                     </span>
                                     <div className="flex items-center space-x-3 mt-1">
                                       <span className="text-caption text-muted-foreground">
-                                        {project.session_count} sessions
+                                        {t('usage.sessionsCount', { count: project.session_count })}
                                       </span>
                                       <span className="text-caption text-muted-foreground">
-                                        {formatTokens(project.total_tokens)} tokens
+                                        {formatTokens(project.total_tokens)} {t('units.tokens')}
                                       </span>
                                     </div>
                                   </div>
@@ -517,7 +525,7 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                               {totalPages > 1 && (
                                 <div className="flex items-center justify-between pt-4">
                                   <span className="text-xs text-muted-foreground">
-                                    {t('usage.showing')} {startIndex + 1}-{Math.min(endIndex, stats.by_project.length)} of {stats.by_project.length}
+                                    {t('usage.showing')} {startIndex + 1}-{Math.min(endIndex, stats.by_project.length)} {t('common.of')} {stats.by_project.length}
                                   </span>
                                   <div className="flex items-center gap-2">
                                     <Button
@@ -529,7 +537,7 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                                       <ChevronLeft className="h-4 w-4" />
                                     </Button>
                                     <span className="text-sm">
-                                      {t('usage.page')} {projectsPage} of {totalPages}
+                                      {t('usage.page')} {projectsPage} {t('common.of')} {totalPages}
                                     </span>
                                     <Button
                                       variant="outline"
@@ -579,7 +587,7 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                                     <div className="flex items-center space-x-2">
                                       <Briefcase className="h-4 w-4 text-muted-foreground" />
                                       <span className="text-xs font-mono text-muted-foreground truncate max-w-[200px]" title={session.project_path}>
-                                        {session.project_path.split('/').slice(-2).join('/')}
+                                        {shortPath(session.project_path)}
                                       </span>
                                     </div>
                                     <span className="text-sm font-medium mt-1">
@@ -599,7 +607,7 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                               {totalPages > 1 && (
                                 <div className="flex items-center justify-between pt-4">
                                   <span className="text-xs text-muted-foreground">
-                                    {t('usage.showing')} {startIndex + 1}-{Math.min(endIndex, sessionStats.length)} of {sessionStats.length}
+                                    {t('usage.showing')} {startIndex + 1}-{Math.min(endIndex, sessionStats.length)} {t('common.of')} {sessionStats.length}
                                   </span>
                                   <div className="flex items-center gap-2">
                                     <Button
@@ -611,7 +619,7 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                                       <ChevronLeft className="h-4 w-4" />
                                     </Button>
                                     <span className="text-sm">
-                                      {t('usage.page')} {sessionsPage} of {totalPages}
+                                      {t('usage.page')} {sessionsPage} {t('common.of')} {totalPages}
                                     </span>
                                     <Button
                                       variant="outline"
@@ -674,10 +682,10 @@ export const UsageDashboard: React.FC<UsageDashboardProps> = ({ }) => {
                                         {t('usage.cost')} {formatCurrency(day.total_cost)}
                                       </p>
                                       <p className="text-xs text-muted-foreground">
-                                        {formatTokens(day.total_tokens)} tokens
+                                        {formatTokens(day.total_tokens)} {t('units.tokens')}
                                       </p>
                                       <p className="text-xs text-muted-foreground">
-                                        {day.models_used.length} model{day.models_used.length !== 1 ? 's' : ''}
+                                        {t('units.models', { count: day.models_used.length })}
                                       </p>
                                     </div>
                                     <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">

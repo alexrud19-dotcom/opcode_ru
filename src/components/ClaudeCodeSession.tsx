@@ -1626,7 +1626,7 @@ export const ClaudeCodeSession: React.FC<ClaudeCodeSessionProps> = ({
                     <div className="flex items-center gap-1.5 text-xs">
                       <Hash className="h-3 w-3 text-muted-foreground" />
                       <span className="font-mono">{totalTokens.toLocaleString()}</span>
-                      <span className="text-muted-foreground">tokens</span>
+                      <span className="text-muted-foreground">{t('units.tokens')}</span>
                     </div>
                   </motion.div>
                 </div>

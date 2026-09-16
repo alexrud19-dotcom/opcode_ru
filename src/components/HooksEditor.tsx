@@ -633,7 +633,7 @@ export const HooksEditor: React.FC<HooksEditorProps> = ({
                                 disabled={readOnly}
                                 className="w-20 h-8"
                               />
-                              <span className="text-sm text-muted-foreground">seconds</span>
+                              <span className="text-sm text-muted-foreground">{t('units.seconds')}</span>
                             </div>
                             
                             {!readOnly && (
@@ -699,7 +699,7 @@ export const HooksEditor: React.FC<HooksEditorProps> = ({
                 disabled={readOnly}
                 className="w-20 h-8"
               />
-              <span className="text-sm text-muted-foreground">seconds</span>
+              <span className="text-sm text-muted-foreground">{t('units.seconds')}</span>
             </div>
             
             {!readOnly && (

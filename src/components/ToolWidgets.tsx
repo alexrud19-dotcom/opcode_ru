@@ -1225,7 +1225,8 @@ export const EditResultWidget: React.FC<{ content: string }> = ({ content }) => 
   
   for (const rawLine of lines) {
     const line = rawLine.replace(/\r$/, '');
-    if (line.includes(t('widgets.fileWord')) && line.includes(t('widgets.hasBeenUpdated'))) {
+    // Разбор вывода инструмента Claude — строки английские и переводу не подлежат.
+    if (line.includes('The file') && line.includes('has been updated')) {
       const match = line.match(/The file (.+) has been updated/);
       if (match) {
         filePath = match[1];
@@ -1362,7 +1363,7 @@ export const MCPWidget: React.FC<{
                 variant="outline" 
                 className="text-xs border-violet-500/30 text-violet-600 dark:text-violet-400"
               >
-                ~{inputTokens} tokens
+                ~{inputTokens} {t('units.tokens')}
               </Badge>
               {isLargeInput && (
                 <button
@@ -1634,7 +1635,7 @@ export const MultiEditWidget: React.FC<{
             className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronRight className={cn("h-3 w-3 transition-transform", isExpanded && "rotate-90")} />
-            {edits.length} edit{edits.length !== 1 ? 's' : ''}
+            {t('units.edits', { count: edits.length })}
           </button>
           
           {isExpanded && (
@@ -2161,8 +2162,9 @@ export const WebSearchWidget: React.FC<{
       }
     }
     
-    searchResults.noResults = resultContent.toLowerCase().includes(t('widgets.noLinks')) || 
-                               resultContent.toLowerCase().includes(t('widgets.noResults'));
+    // Признаки пустого результата приходят от Claude по-английски.
+    searchResults.noResults = resultContent.toLowerCase().includes('no links found') ||
+                               resultContent.toLowerCase().includes('no results');
     searchResults.sections = parseSearchResult(resultContent);
   }
   
@@ -2227,7 +2229,7 @@ export const WebSearchWidget: React.FC<{
                         ) : (
                           <ChevronRight className="h-3 w-3" />
                         )}
-                        <span>{links.length} result{links.length !== 1 ? 's' : ''}</span>
+                        <span>{t('units.results', { count: links.length })}</span>
                       </button>
                       
                       {/* Links Display */}
@@ -2701,7 +2703,7 @@ export const TodoReadWidget: React.FC<{ todos?: any[]; result?: any }> = ({ todo
               {todo.dependencies?.length > 0 && (
                 <div className="flex items-center gap-1">
                   <GitBranch className="h-3 w-3" />
-                  <span>{todo.dependencies.length} deps</span>
+                  <span>{t('units.deps', { count: todo.dependencies.length })}</span>
                 </div>
               )}
             </div>
