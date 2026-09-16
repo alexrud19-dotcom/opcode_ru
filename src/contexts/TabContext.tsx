@@ -84,7 +84,7 @@ export const TabProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const defaultTab: Tab = {
         id: generateTabId(),
         type: 'projects',
-        title: 'Projects',
+        title: i18n.t('projects.title'),
         status: 'idle',
         hasUnsavedChanges: false,
         order: 0,

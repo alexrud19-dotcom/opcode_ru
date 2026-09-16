@@ -16,8 +16,22 @@ interface TabItemProps {
   setDraggedTabId?: (id: string | null) => void;
 }
 
+// У вкладок фиксированного типа заголовок берём из словаря, а не из
+// сохранённого значения — иначе после смены языка они остались бы на старом.
+const FIXED_TAB_TITLES: Partial<Record<Tab['type'], string>> = {
+  projects: 'projects.title',
+  settings: 'misc.tabSettings',
+  usage: 'misc.tabUsage',
+  agents: 'misc.tabAgents',
+  mcp: 'misc.mcpServers',
+  'create-agent': 'misc.createAgent',
+  'import-agent': 'misc.importAgent',
+};
+
 const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDragging = false, setDraggedTabId }) => {
   const { t } = useTranslation();
+  const titleKey = FIXED_TAB_TITLES[tab.type];
+  const displayTitle = titleKey ? t(titleKey) : tab.title;
   const [isHovered, setIsHovered] = useState(false);
   
   const getIcon = () => {
@@ -90,7 +104,7 @@ const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDr
       
       {/* Tab Title */}
       <span className="flex-1 truncate text-xs font-medium min-w-0">
-        {tab.title}
+        {displayTitle}
       </span>
 
       {/* Status Indicators - always takes up space */}
@@ -121,7 +135,7 @@ const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDr
           "focus:outline-none focus:ring-1 focus:ring-destructive/50",
           (isHovered || isActive) ? "opacity-100" : "opacity-0"
         )}
-        title={t('tabs.close', { title: tab.title })}
+        title={t('tabs.close', { title: displayTitle })}
         tabIndex={-1}
       >
         <X className="w-3 h-3" />

@@ -2551,7 +2551,7 @@ export const TodoReadWidget: React.FC<{ todos?: any[]; result?: any }> = ({ todo
       color: "text-green-500",
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/20",
-      label: "Completed"
+      label: t('widgets.completed')
     },
     in_progress: {
       icon: <Clock className="h-4 w-4 animate-pulse" />,
@@ -2565,14 +2565,14 @@ export const TodoReadWidget: React.FC<{ todos?: any[]; result?: any }> = ({ todo
       color: "text-muted-foreground",
       bgColor: "bg-muted/50",
       borderColor: "border-muted",
-      label: "Pending"
+      label: t('widgets.pending')
     },
     cancelled: {
       icon: <X className="h-4 w-4" />,
       color: "text-red-500",
       bgColor: "bg-red-500/10",
       borderColor: "border-red-500/20",
-      label: "Cancelled"
+      label: t('widgets.cancelled')
     }
   };
 

@@ -158,7 +158,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ tab, isActive }) => {
                                 setSessions([]);
                                 // Restore tab title to "Projects"
                                 updateTab(tab.id, {
-                                  title: 'Projects'
+                                  title: t('projects.title')
                                 });
                               }}
                               className="h-8 w-8 -ml-2"
@@ -257,7 +257,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ tab, isActive }) => {
                 // Go back to projects view in the same tab
                 updateTab(tab.id, {
                   type: 'projects',
-                  title: 'Projects',
+                  title: t('projects.title'),
                 });
               }}
               onProjectPathChange={(path: string) => {

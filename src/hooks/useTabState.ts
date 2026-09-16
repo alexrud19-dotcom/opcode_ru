@@ -97,7 +97,7 @@ export const useTabState = (): UseTabStateReturn => {
     // Allow multiple projects tabs
     return addTab({
       type: 'projects',
-      title: 'Projects',
+      title: i18n.t('projects.title'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'folder'
@@ -114,7 +114,7 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'agents',
-      title: 'Agents',
+      title: i18n.t('misc.tabAgents'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'bot'
@@ -131,7 +131,7 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'usage',
-      title: 'Usage',
+      title: i18n.t('misc.tabUsage'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'bar-chart'
@@ -165,7 +165,7 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'settings',
-      title: 'Settings',
+      title: i18n.t('misc.tabSettings'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'settings'
